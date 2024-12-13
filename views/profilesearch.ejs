@@ -59,10 +59,18 @@
             <div class="post-card col-12 col-sm-6 col-md-4 col-lg-3">
               <div class="post-image-container">
                 <% if (post.mediaType === "image") { %>
-                  <img src="/uploads/<%= post.media %>" alt="<%= post.imageText %>" class="post-media">
+                  <% if(post.media.includes('http')) { %> 
+                    <img src="<%=post.media %>" alt="<%= post.imageText %>" class="post-media">
+                    <% } else { %>
+                      <img src="/uploads/<%= post.media %>" alt="<%= post.imageText %>" class="post-media"> 
+                    <% } %>
                 <% } else if (post.mediaType === "video") { %>
                   <video controls class="post-media">
-                    <source src="/uploads/<%= post.media %>" type="video/mp4">
+                    <% if(post.media.includes('http')) { %> 
+                      <source src="<%= post.media %>" type="video/mp4">
+                      <% } else { %>
+                        <source src="/uploads/<%= post.media %>" type="video/mp4">
+                      <% } %>
                   </video>
                 <% } %>
                 <div class="action-icons">
