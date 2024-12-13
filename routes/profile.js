@@ -297,10 +297,19 @@ router.get("/about", (req, res) => {
 router.get("/profile/:userId/share", ensureAuthenticated, async (req, res) => {
   try {
     const userId = req.params.userId;
-    const user = await userRoute.findOne(userId);
+
+    let user;
+
+    if (mongoose.Types.ObjectId.isValid(userId)) {
+      // If it's a valid ObjectId, query by _id.
+      user = await userRoute.findById(userId);
+    } else {
+      // If it's not a valid ObjectId, query by username.
+      user = await userRoute.findOne({ username: userId });
+    }
 
     if (!user) {
-      return res.status(404).send("user not found");
+      return res.status(404).send("User not found");
     }
 
     res.render("shareProfile.ejs", { user });
