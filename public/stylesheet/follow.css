@@ -1,0 +1,58 @@
+/* Follow.css */
+
+/* Container adjustments for spacing */
+.container {
+  margin-top: 20px;
+}
+
+/* Optional: You can keep custom styling if needed */
+h2 {
+  font-size: 2rem;
+}
+
+.user-list li {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Shrink image and content on smaller screens */
+@media (max-width: 768px) {
+  .user-list li {
+    flex-direction: row; /* Maintain row layout, even on small screens */
+    align-items: center;
+  }
+
+  .user-list li img {
+    width: 40px; /* Shrink image size */
+    height: 40px;
+  }
+
+  .user-list li a {
+    font-size: 0.9rem; /* Slightly smaller text */
+  }
+
+  .message-btn {
+    font-size: 0.8rem; /* Slightly smaller button */
+  }
+}
+
+/* Ensure smooth shrinking */
+@media (max-width: 576px) {
+  .user-list li {
+    padding: 10px; /* Reduce padding */
+  }
+
+  .user-list li img {
+    width: 35px; /* Shrink image more */
+    height: 35px;
+  }
+
+  .user-list li a {
+    font-size: 0.8rem; /* Shrink text further */
+  }
+
+  .user-list li .message-btn {
+    font-size: 0.7rem; /* Smaller button */
+  }
+}

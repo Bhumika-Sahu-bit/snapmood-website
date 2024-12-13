@@ -1,0 +1,159 @@
+<%- include('partials/navbar') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>save feed</title>
+</head>
+<style>
+    /* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.col-md-4 {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* Card Styles */
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card-img-top {
+  width: 100%;
+  height: 200px;
+  object-fit:contain;
+  border-bottom: 1px solid #e0e0e0;
+}
+.username-overlay {
+  position: absolute;
+  top: 10px; /* Positioned near the top */
+  left: 10px; /* Positioned slightly from the left */
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black background */
+  color: #fff; /* White text for contrast */
+  padding: 5px 10px; /* Padding for better appearance */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 14px; /* Adjusted font size */
+  font-weight: bold;
+  z-index: 10; /* Ensure it is on top of the image */
+}
+.card-body {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.save-btn {
+  background-color: #ff4e4e;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.save-btn:hover {
+  background-color: #ff3333;
+}
+
+.text-center p {
+  font-size: 1.1rem;
+  color: #666;
+  margin-top: 20px;
+  font-style: italic;
+}
+
+</style>
+<body>
+    <div class="container">
+        <h1 class="text-center my-4">Saved Posts</h1>
+        <div class="row">
+          
+           <% if(savedpost && savedpost.length > 0 ) { %>
+            <% savedpost.forEach((post) => { %>
+                <div class="col-md-4">
+                    <div class="card">
+                      <div class="username-overlay">
+                        @ <%= post.author.username || "Anonymous" %>
+                      </div>
+                        <% if(post.mediaType === "image") { %>
+                          <% if(post.media.includes('http')) { %> 
+                            <img src="<%=post.media %>" alt="<%= post.imageText %>" class="card-img-top">
+                            <% } else { %>
+                              <img src="/uploads/<%= post.media %>" alt="<%= post.imageText %>" class="card-img-top"> 
+                            <% } %>
+                        <% } else if (post.mediaType === "video") { %>
+                          <video controls class="card-img-top">
+                            <% if(post.media.includes('http')) { %> 
+                              <source src="<%= post.media %>" type="video/mp4">
+                              <% } else { %>
+                                <source src="/uploads/<%= post.media %>" type="video/mp4">
+                              <% } %>
+                           
+                          </video>
+                        <% } %>
+                        <div class="card-body">
+                            <h5 class="card-title"><%= post.imageText || "untitled post" %></h5>
+                            <form action="/save/<%= post._id %>" method="post">
+                                <button type="submit" class="save-btn">Unsave</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+          <% } else { %>
+            <p class="text-center">You haven't saved any posts yet.</p>
+            <% } %>
+        </div>
+    </div>
+    
+    <%- include('partials/footer') %>
+</body>
+</html>

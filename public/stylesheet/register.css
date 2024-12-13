@@ -1,0 +1,49 @@
+/* Reset some basic styling */
+body, html {
+    height: 100%;
+}
+
+/* Center the card vertically */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Customize button and link colors */
+.btn-danger {
+    background-color: #f30d19;
+    font-weight: 700;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #df0812;
+}
+
+.btn-primary {
+    background-color: rgb(9, 128, 240);
+    color: white;
+    font-weight: 700;
+}
+
+.btn-primary:hover {
+    background-color: rgb(8, 110, 206);
+}
+
+.btn-light {
+    background-color: #ccc;
+}
+
+.btn-light:hover {
+    background-color: #a0a0a0;
+}
+
+/* Customize footer text */
+footer p {
+    font-size: 12px;
+    color: #6c757d;
+}
+
+/* Make the log-in link bold */
+footer a {
+    font-weight: 700;
+}

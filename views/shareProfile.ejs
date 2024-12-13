@@ -1,0 +1,105 @@
+<%- include('partials/navbar') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Profile</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card {
+            max-width: 400px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 5vh;
+        }
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            margin-left: 60px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 3px solid #3b5998;
+        }
+        .username {
+            font-size: 1.5rem;
+            color: #3b5998;
+            font-weight: bold;
+        }
+        .email-container span {
+            font-size: 1rem;
+            color: #555;
+        }
+        .description {
+            margin: 10px 0;
+            font-size: 1rem;
+            color: #777;
+        }
+        .share-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #3b5998;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        .share-btn:hover {
+            background-color: #2e5894;
+        }
+    </style>
+</head>
+<body>
+    <div class="container d-flex align-items-center justify-content-center vh-100 bg-light">
+    <div class="card p-4">
+        <!-- Profile Picture -->
+        <img src="<%= user.profileImage %>" alt="Profile Picture" class="profile-pic">
+
+        <!-- Username -->
+        <div class="username"><%= user.username %></div>
+
+        <!-- Email -->
+        <div class="email-container">
+            <span>Email: <%= user.email %></span>
+        </div>
+
+        <!-- Description -->
+        <div class="description">
+            <p><%= user.description || "This is a sample profile description." %></p>
+        </div>
+
+        <!-- Share Button -->
+        <button class="share-btn" onclick="shareProfile()">Share Profile</button>
+    </div>
+</div>
+    <%- include('partials/footer') %>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function shareProfile() {
+            const shareData = {
+                title: "<%= user.username %>'s Profile",
+                text: "Check out this profile on our Social Media App!",
+                url: "https://yourapp.com/profile/<%= user.username %>"
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData)
+                    .then(() => console.log("Profile shared successfully"))
+                    .catch(err => console.error("Error sharing profile:", err));
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                alert("Your browser doesn't support native sharing. Copy the link to share:\n" + shareData.url);
+            }
+        }
+    </script>
+
+
+</body>
+</html>

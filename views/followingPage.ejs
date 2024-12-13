@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= pageTitle %></title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- Bootstrap CDN -->
+  <link rel="stylesheet" href="/stylesheet/follow.css"> <!-- Add your custom CSS file -->
+</head>
+<body>
+  <div class="container mt-4">
+    <h2 class="text-center">Following</h2>
+    <ul class="user-list list-unstyled">
+      <% if (following.length > 0) { %>
+        <% following.forEach((follow) => { %>
+          <li class="d-flex align-items-center justify-content-between mb-3 p-3 border rounded">
+            <img src="<%= follow.profileImage || '/default-profile.png' %>" alt="Profile Image" class="rounded-circle" width="50" height="50" />
+            <a href="/profile/<%= follow._id %>" class="flex-grow-1 text-left text-decoration-none text-primary font-weight-bold ml-3"><%= follow.username %></a>
+            <button class="message-btn btn btn-primary btn-sm">Message</button>
+          </li>
+        <% }); %>
+      <% } else { %>
+        <p>No users being followed.</p>
+      <% } %>
+    </ul>
+  </div>
+
+  <%- include('partials/footer') %>
+  <!-- Bootstrap JS & dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

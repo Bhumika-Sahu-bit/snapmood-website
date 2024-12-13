@@ -1,0 +1,202 @@
+<%- include('partials/navbar') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a New Post</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef2f7; /* Softer background color for better contrast */
+            margin: 0;
+            padding: 0;
+            color: #333; /* Default text color */
+        }
+    
+        /* Main container for the form */
+        .main-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Ensure it fills the viewport */
+            padding: 20px;
+        }
+    
+        /* Form container styling */
+        .form-container {
+            background: #ffffff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Softer shadow for depth */
+            width: 100%;
+            max-width: 450px;
+            text-align: left;
+        }
+    
+        /* Form header */
+        .form-container h1 {
+            font-size: 26px;
+            margin-bottom: 15px;
+            color: #007bff; /* Accent color for the title */
+            text-align: center;
+        }
+    
+        /* Form labels */
+        .form-container label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+            color: #555;
+        }
+    
+        /* Form input fields */
+        .form-container input[type="file"],
+        .form-container input[type="text"],
+        .form-container textarea,
+        .form-container select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+    
+        /* Focus effect for inputs */
+        .form-container input[type="text"]:focus,
+        .form-container textarea:focus,
+        .form-container select:focus,
+        .form-container input[type="file"]:focus {
+            border-color: #007bff; /* Accent color on focus */
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+    
+        /* Textarea specific styling */
+        .form-container textarea {
+            height: 120px;
+            resize: vertical;
+        }
+    
+        /* Submit button */
+        .form-container input[type="submit"] {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+    
+        .form-container input[type="submit"]:hover {
+            background-color: #0056b3;
+            transform: scale(1.02); /* Slightly enlarges the button */
+        }
+    
+        .form-container input[type="submit"]:active {
+            background-color: #004085;
+            transform: scale(0.98); /* Shrinks the button slightly on click */
+        }
+    
+        /* Responsive form adjustments */
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 30px 20px;
+            }
+    
+            .form-container h1 {
+                font-size: 22px;
+            }
+    
+            .form-container input[type="submit"] {
+                font-size: 15px;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="main-container">
+        <div class="form-container">
+            <h1>Create a New Post</h1>
+            <form action="/createpost"id="uploadForm" method="post" enctype="multipart/form-data">
+                <!-- Dropdown to select media type -->
+                <label for="mediaType">Choose Media Type:</label>
+                <select name="mediaType" id="mediaType" required>
+                    <option value="image">Image</option>
+                    <option value="video">Video</option>
+                </select>
+
+                <!-- File input for media upload -->
+                <label for="media">Upload Media:</label>
+                <input type="file" name="media" id="media" required>
+
+                <!-- Text input for image text -->
+                <input type="text" placeholder="Image or Video Text" name="imageText" required>
+
+                <!-- Textarea for optional description -->
+                <textarea placeholder="Description" name="description"></textarea>
+
+                <!-- Tags input field -->
+                <label for="tags">Tags (comma-separated):</label>
+                <input type="text" placeholder="e.g. nature, beach, vacation" name="tags" id="tags">
+
+                <!-- Submit button -->
+                <input type="submit" value="Create Post">
+            </form>
+        </div>
+    </div>
+
+    <%- include('partials/footer') %>
+    <script>
+        document.getElementById("media").addEventListener("change", function () {
+            const mediaType = document.getElementById("mediaType").value;
+            const file = this.files[0];
+            if (mediaType === "image" && !file.type.startsWith("image/")) {
+                alert("Please upload a valid image file.");
+                this.value = ""; // Clear the invalid file
+            } else if (mediaType === "video" && !file.type.startsWith("video/")) {
+                alert("Please upload a valid video file.");
+                this.value = ""; // Clear the invalid file
+            }
+        });
+
+        document.getElementById("uploadForm").addEventListener("submit" , function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+
+            fetch("/createpost" , {
+                method: "post",
+                body: formData
+            })
+           .then(response => {
+            if(response.ok) {
+                const contentType = response.headers.get("Content-Type");
+                if(contentType && contentType.includes("application/json")) {
+                    return response.json();
+                } else {
+                    return response.text();
+                }
+            }
+            throw new Error("failed to upload post");
+           }) 
+           .then(data => {
+            console.log("Success", data);
+            window.location.href = "/profile";
+        })
+        .catch((error) => {
+            console.error("Error", error);
+        });
+        })
+    </script>
+</body>
+</html>

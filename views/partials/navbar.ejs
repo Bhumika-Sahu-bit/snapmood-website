@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Navbar</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    /* Navbar Styling */
+    .navbar {
+      background-color: #ffffff;
+      border-bottom: 1px solid #e2e2e2;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 0.5rem 1rem;
+    }
+
+    .navbar-brand {
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+    }
+
+    .navbar-brand img {
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+
+    .nav-link {
+      font-size: 1rem;
+      color: #555555;
+      font-weight: 500;
+      margin-right: 1rem;
+      transition: color 0.3s ease-in-out;
+    }
+
+    .nav-link:hover {
+      color: #e60023;
+      text-decoration: none;
+    }
+
+    /* Search Bar Styling */
+    .search-bar {
+      flex-grow: 1;
+      max-width: 400px;
+    }
+
+    .search-bar form {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .search-bar input {
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 50px;
+      padding: 0.4rem 2.5rem 0.4rem 1rem;
+    }
+
+    .search-bar .fa-search {
+      position: absolute;
+      right: 10px;
+      color: #555;
+      cursor: pointer;
+    }
+
+    /* Mobile Search Bar Styling */
+    #mobileSearchBar {
+      top: 100%;
+      left: 0;
+      z-index: 1050;
+      background-color: white;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 0.5rem;
+    }
+
+    #mobileSearchBar input {
+      width: calc(100% - 50px);
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .search-bar {
+        display: none;
+      }
+
+      .d-flex.align-items-center .fa-search {
+        font-size: 1.5rem;
+        cursor: pointer;
+        margin-right: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container-fluid">
+      <!-- Logo -->
+      <a class="navbar-brand d-flex align-items-center" href="/">
+        <img src="https://www.freepnglogos.com/uploads/s-letter-logo-png-1.png" alt="snapmood Logo" width="30" height="30" class="d-inline-block align-text-top">
+        <span class="ms-2 text-danger" style="font-size: 1.3rem; font-weight: bold;">Snapmood</span>
+      </a>
+
+      <!-- Search Bar (Visible on Larger Screens) -->
+      
+      <div class="search-bar d-none d-lg-block mx-auto">
+        <form action="/search" method="GET">
+          <input type="text" class="form-control" name="query" placeholder="Search users..." aria-label="Search" required>
+          <i class="fas fa-search"></i>
+        </form>
+      </div>
+
+      <!-- Mobile Search and Hamburger Menu -->
+      <div class="d-flex d-lg-none align-items-center">
+        <!-- Search Icon -->
+        <i class="fas fa-search text-muted me-3" id="mobileSearchIcon" onclick="toggleMobileSearch()"></i>
+        <!-- Hamburger Menu -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+
+      <!-- Collapsible Links Section -->
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <!-- Static Links -->
+          <li class="nav-item">
+            <a class="nav-link" href="/feed">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/profile">Profile</a>
+          </li>
+          <!-- Conditional Buttons -->
+          <% if (user) { %>
+            <li class="nav-item">
+              <form action="/logout" method="get" class="d-inline">
+                <button type="submit" class="btn btn-danger btn-sm ms-2">Logout</button>
+              </form>
+            </li>
+          <% } else { %>
+            <li class="nav-item">
+              <a href="/login" class="btn btn-danger btn-sm me-2">Log In</a>
+            </li>
+            <li class="nav-item">
+              <a href="/register" class="btn btn-outline-secondary btn-sm">Sign Up</a>
+            </li>
+          <% } %>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Hidden Mobile Search Bar -->
+    <div id="mobileSearchBar" class="d-none position-absolute w-100">
+      <form action="/search" method="GET" class="d-flex">
+        <input type="text" class="form-control" name="query" placeholder="Search users..." required>
+        <button type="submit" class="btn btn-danger">
+          <i class="fas fa-search"></i>
+        </button>
+      </form>
+    </div>
+  </nav>
+
+  <script>
+    // Toggle the mobile search bar
+    function toggleMobileSearch() {
+      const searchBar = document.getElementById('mobileSearchBar');
+      searchBar.classList.toggle('d-none');
+    }
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

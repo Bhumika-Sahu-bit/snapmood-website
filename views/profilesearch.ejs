@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="/stylesheet/profilesearch.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <%- include('partials/navbar') %>
+  
+  
+  <!-- Profile Section -->
+  <div class="profile-container container-fluid">
+
+    <div class="profile-header text-center">
+      <div class="profile-image-container">
+        <img src="<%= user.profileImage %>" alt="Profile Picture" class="profile-image">
+      </div>
+      <div class="profile-details mt-3">
+        <h1 class="profile-name">@<%= user.username %></h1>
+        <p class="profile-username email"><%= user.email %></p>
+        <h3 class="profile-following tagline"><%= user.description || "No description available" %></h3>
+      </div>
+    </div>
+
+    <div class="profile-stats mt-4">
+      <div class="stats-item">
+        <a href="/<%= user._id %>/followers" class="clickable">
+          <h4 class="stats-count" id="follower-count"><%= user.followers.length %></h4>
+        </a>
+        <p class="stats-label">Followers</p>
+      </div>
+      <div class="stats-item">
+        <a href="<%= user._id %>/following" class="clickable">
+          <h4 class="stats-count" id="following-count"><%= user.following.length %></h4>
+        </a>
+        <p class="stats-label">Following</p>
+      </div>
+    </div>
+
+    <!-- Follow Button -->
+    <div class="follow-message-buttons mt-4 text-center">
+      <!-- Follow Toggle Button -->
+      <button class="btn btn-primary follow-btn" id="follow-btn" data-user-id="<%= user._id %>">
+        <%= user.followers.includes(currentUserId) ? 'Following' : 'Follow' %>
+      </button>
+    </div>
+
+    <!-- Posts Section -->
+    <div class="no-pins">
+      <% if (posts && posts.length > 0) { %>
+        <h2 class="text-center mb-4">Posts Created by <%= user.username %></h2>
+        <div class="posts-grid row">
+          <% posts.forEach(post => { %>
+            <div class="post-card col-12 col-sm-6 col-md-4 col-lg-3">
+              <div class="post-image-container">
+                <% if (post.mediaType === "image") { %>
+                  <img src="/uploads/<%= post.media %>" alt="<%= post.imageText %>" class="post-media">
+                <% } else if (post.mediaType === "video") { %>
+                  <video controls class="post-media">
+                    <source src="/uploads/<%= post.media %>" type="video/mp4">
+                  </video>
+                <% } %>
+                <div class="action-icons">
+                  <i class="fas fa-heart like-icon <%= post.likes && post.likes.includes(user._id.toString()) ? 'liked' : '' %>" data-post-id="<%= post._id %>"></i>
+                  <i class="fas fa-bookmark save-icon <%= user.savedpost && user.savedpost.includes(post._id.toString()) ? 'saved' : '' %>" data-post-id="<%= post._id %>"></i>
+                </div>
+              </div>
+              <div class="post-content text-center mt-2">
+                <h3 class="post-title"><%= post.imageText %></h3>
+                <p class="post-description"><%= post.description || "No description available" %></p>
+
+                <!-- Display tags -->
+                <%if(post.tags && post.tags.length > 0) { %>
+                  <div class="post-tags">
+                    <% post.tags.forEach( tag => { %>
+                      <span class="tag-item"><%= tag %></span>
+                    <% }) %>
+                  </div>
+               <% } %>
+                <p class="post-date">Posted on: <%= new Date(post.createdAt).toLocaleDateString() %></p>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <p class="text-center">Nothing to show...yet! Pins you create will live here.</p>
+      <% } %>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/searchprofile.js"></script>
+</body>
+</html>

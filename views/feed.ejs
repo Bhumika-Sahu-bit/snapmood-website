@@ -1,0 +1,70 @@
+<%- include('partials/navbar') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feed</title>
+  <link rel="stylesheet" href="/stylesheet/feed.css">
+</head>
+<body>
+  <div class="container">
+    <div class="posts-grid">
+      <% posts.forEach(post => { %>
+        <div class="card post-card">
+          <div class="username-overlay">
+            @ <%= post.author.username || "Anonymous" %>✌️
+          </div>
+          <div class="post-image-container">
+           
+            <% if (post.mediaType === "image") { %>
+              <% if(post.media.includes('http')) { %> 
+                <img src="<%=post.media %>" alt="<%= post.imageText %>" class="post-media">
+                <% } else { %>
+                  <img src="/uploads/<%= post.media %>" alt="<%= post.imageText %>" class="post-media"> 
+                <% } %>
+            <% } else if (post.mediaType === "video") { %>
+              <video controls class="post-media">
+                <% if(post.media.includes('http')) { %> 
+                  <source src="<%= post.media %>" type="video/mp4">
+                  <% } else { %>
+                    <source src="/uploads/<%= post.media %>" type="video/mp4">
+                  <% } %>
+              </video>
+            <% } %>
+            <div class="action-icons">
+              <!-- Like Icon -->
+              <i class="fas fa-heart like-icon  <%= post.likes && post.likes.includes(user._id.toString()) ? 'liked' : "" %>"
+                data-post-id="<%= post._id %>"></i>
+              <!-- Save Icon -->
+              <i 
+                class="fas fa-bookmark save-icon <%= user.savedpost && user.savedpost.includes(post._id.toString()) ? 'saved' : '' %>" 
+                data-post-id="<%= post._id %>">
+              </i>
+            </div>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title"><%= post.imageText %></h5>
+            <p class="card-text"><%= post.description || "No description available" %></p>
+            <!-- Display tags -->
+            <%if(post.tags && post.tags.length > 0) { %>
+              <div class="post-tags">
+                <% post.tags.forEach( tag => { %>
+                  <span class="tag-item"><%= tag %></span>
+                <% }) %>
+              </div>
+           <% } %>
+            <p class="card-text text-muted">Posted on: <%= new Date(post.createdAt).toLocaleDateString() %></p>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+
+  <%- include('partials/footer') %>
+  <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
+  <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="/js/feed.js"></script>
+</body>
+</html>

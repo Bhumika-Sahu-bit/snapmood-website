@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="/stylesheet/profile.css">
+</head>
+<body>
+  <!-- Navbar -->
+  <%- include('partials/navbar') %>
+  <div class="profile-container container-fluid">
+    <form id="uploadform" hidden action="/fileupload" method="post" enctype="multipart/form-data">
+      <input type="file" name="profileImage">
+    </form>
+  
+    <div class="profile-header text-center">
+      <div class="profile-image-container">
+        <img src="<%= user.profileImage %>" alt="Profile Picture" class="profile-image">
+        <a href="#" class="edit-icon" id="uploadicon">
+          <i class="fas fa-pencil-alt"></i>
+        </a>
+      </div>
+      <div class="profile-details mt-3">
+        <h1 class="profile-name">@<%= user.username %></h1>
+        <p class="profile-username email"><%= user.email %></p>
+        <h3 class="profile-following tagline"><%= user.description || "No description available" %></h3>
+  
+        <!-- Followers and Following Section -->
+        <div class="profile-stats mt-4">
+          <div class="stats-item">
+           <a href="/<%= user._id %>/followers" class="clickable">
+             <h4 class="stats-count" id="follower-count" ><%= user.followers.length %></h4></a>
+            <p class="stats-label">Followers</p>
+          </div>
+          <div class="stats-item">
+            <a href="<%= user._id %>/following" class="clickable">
+              <h4 class="stats-count" id="following-count"><%= user.following.length %></h4></a>
+            <p class="stats-label">Following</p>
+          </div>
+        </div>
+  
+        <div class="profile-buttons mt-3">
+          <a href="/profile/<%= user.id %>/share"><button class="btn btn-share">Share</button></a>
+          <a href="/edit"><button class="btn btn-edit">Edit Profile</button></a>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Tabs -->
+    <div class="profile-tabs text-center my-4">
+      <a href="/create" class="tab-button active">Created</a>
+      <a href="/save" class="tab-button">Saved</a>
+    </div>
+  
+    <!-- Posts Section -->
+    <div class="no-pins">
+      <% if (posts && posts.length > 0) { %>
+        <h2 class="text-center mb-4">Posts</h2>
+        <div class="posts-grid row">
+          <% user.posts.forEach(post => { %>
+            <div class="post-card col-12 col-sm-6 col-md-4 col-lg-3">
+              <div class="post-image-container">
+                <% if (post.mediaType === "image") { %>
+                  <% if(post.media.includes('http')) { %> 
+                  <img src="<%=post.media %>" alt="<%= post.imageText %>" class="post-media">
+                  <% } else { %>
+                    <img src="/uploads/<%= post.media %>" alt="<%= post.imageText %>" class="post-media"> 
+                  <% } %>
+                  
+                <% } else if (post.mediaType === "video") { %>
+                  <video controls class="post-media">
+                    <% if(post.media.includes('http')) { %> 
+                      <source src="<%= post.media %>" type="video/mp4">
+                      <% } else { %>
+                        <source src="/uploads/<%= post.media %>" type="video/mp4">
+                      <% } %>
+                   
+                  </video>
+                <% } %>
+                <div class="action-icons">
+                  <i class="fas fa-heart like-icon <%= post.likes && post.likes.includes(user._id.toString()) ? 'liked' : '' %>" 
+                    data-post-id="<%= post._id %>"></i>
+                  <i 
+                    class="fas fa-bookmark save-icon <%= user.savedpost && user.savedpost.includes(post._id.toString()) ? 'saved' : '' %>" 
+                    data-post-id="<%= post._id %>">
+                  </i>
+                </div>
+              </div>
+              <div class="post-content text-center mt-2">
+                <h2 class="post-title"><%= post.imageText %></h2>
+                <h5 class="post-description"><%= post.description || "No description available" %></h5>
+
+                <!-- Display tags -->
+                 <%if(post.tags && post.tags.length > 0) { %>
+                    <div class="post-tags">
+                      <% post.tags.forEach( tag => { %>
+                        <span class="tag-item"><%= tag %></span>
+                      <% }) %>
+                    </div>
+                 <% } %>
+                <p class="post-date">Posted on: <%= new Date(post.createdAt).toLocaleDateString() %></p>
+                <button class="btn btn-danger delete-btn" data-post-id="<%= post._id %>">Delete</button>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <p class="text-center">Nothing to show...yet! Pins you create will live here.</p>
+      <% } %>
+    </div>
+  </div>
+
+
+  <%- include('partials/footer') %>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/profile.js"></script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        body {
+            background: linear-gradient(to bottom, #f9f9fb, #eef2f7);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+        }
+
+        .about-container {
+            max-width: 900px;
+            margin: auto;
+            padding: 40px 20px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .about-title {
+            color: #3b5998;
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+
+        .about-text {
+            color: #555;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .developer-section {
+            margin-top: 40px;
+        }
+
+        .developer-info img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 5px solid #3b5998;
+            box-shadow: 0 8px 20px rgba(59, 89, 152, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .developer-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #3b5998;
+        }
+
+        .developer-bio {
+            font-size: 1rem;
+            color: #666;
+            margin: 20px 0;
+            padding: 0 10px;
+        }
+
+        .social-links {
+            margin-top: 30px;
+        }
+
+        .social-links a {
+            margin: 0 20px;
+            font-size: 1.8rem;
+            color: #3b5998;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #2e5894;
+            transform: scale(1.1);
+        }
+
+        .social-links i {
+            background: #eef2f7;
+            padding: 15px;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn {
+            margin-top: 30px;
+        }
+
+        .back-btn a {
+            padding: 10px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            background-color: #3b5998;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .back-btn a:hover {
+            background-color: #2e5894;
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .about-title {
+                font-size: 1.8rem;
+            }
+
+            .about-text {
+                font-size: 1rem;
+                margin: 15px 0;
+            }
+
+            .social-links a {
+                margin: 0 15px;
+                font-size: 1.5rem;
+            }
+
+            .back-btn a {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <!-- About Section -->
+        <div class="about-container">
+            <h2 class="about-title">About This Social Media App</h2>
+            <p class="about-text">
+                Welcome to our Social Media App! This platform allows users to connect, share, and explore their community through posts, interactions, and exciting features.
+                We aim to provide a seamless, secure, and enjoyable experience for all our users.
+            </p>
+
+            <!-- Developer Section -->
+            <div class="developer-section">
+                <div class="developer-info">
+                    <img src="/image/bhumi-media.jpg" alt="Developer Image">
+                    <h3 class="developer-name">Bhumika Sahu</h3>
+                    <p class="developer-bio">
+                        Hi! I'm a passionate web developer with a love for crafting interactive and user-friendly platforms. 
+                        I specialize in full-stack development and enjoy exploring new technologies.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Social Links -->
+            <div class="social-links">
+                <a href="https://www.linkedin.com/authwall?trk=bf&trkInfo=AQFJ9uCAwpr4bQAAAZOQ7MuQV7xPKeIe-8gd1gmvmOw_yurCcbrv8fprj_Mvz6ljeQ2YXT4IlNgaqwW0LKLxizbeVqMqGyzF-LL336zqd4Qzzqcp41ycKVNEsgw2IaVR8MHh-YI=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fbhumika-sahu-b178a22b2%3Futm_source%3Dshare%26utm_campaign%3Dshare_via%26utm_content%3Dprofile%26utm_medium%3Dandroid_app" target="_blank" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://github.com/Bhumika-Sahu-bit" target="_blank" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.instagram.com/bhumika_sahu.1612/profilecard/?igsh=ZGhvY2JuZWU5MDY4" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+
+            <!-- Back to Home Button -->
+            <div class="back-btn">
+                <a href="/feed" title="Back to Home">Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
