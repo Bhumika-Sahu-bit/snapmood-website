@@ -8,6 +8,7 @@ const user = require("../models/user");
 const router = express.Router();
 const cloudinary = require("../config/cloudinary");
 const fs = require("fs");
+const mongoose = require("mongoose");
 
 router.get("/profile", ensureAuthenticated, async (req, res, next) => {
   try {
