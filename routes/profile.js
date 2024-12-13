@@ -303,7 +303,7 @@ router.get("/profile/:userId/share", ensureAuthenticated, async (req, res) => {
       return res.status(400).send("Invalid User ID");
     }
 
-    const user = await User.findById(userId);
+    const user = await userRoute.findById(userId);
 
     if (!user) {
       return res.status(404).send("User not found");
