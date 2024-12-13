@@ -297,7 +297,7 @@ router.get("/about", (req, res) => {
 router.get("/profile/:userId/share", ensureAuthenticated, async (req, res) => {
   try {
     const userId = req.params.userId;
-    const user = await userRoute.findById(userId);
+    const user = await userRoute.findOne(userId);
 
     if (!user) {
       return res.status(404).send("user not found");
