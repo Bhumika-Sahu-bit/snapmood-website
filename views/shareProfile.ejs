@@ -86,7 +86,7 @@
             const shareData = {
                 title: "<%= user.username %>'s Profile",
                 text: "Check out this profile on our Social Media App!",
-                url: "https://snapmood.onrender.com/profile/<%= user.username %>"
+                url: "https://snapmood.onrender.com/profile/<%= user._id %>"
             };
 
             if (navigator.share) {
