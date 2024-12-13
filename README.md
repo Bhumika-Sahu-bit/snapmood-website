@@ -1,0 +1,1 @@
+A dynamic and feature-rich social media platform designed for seamless user interaction, allowing users to create profiles, share posts, connect with others, and explore content. This project highlights full-stack development expertise, including authentication, responsive design, and data management.
