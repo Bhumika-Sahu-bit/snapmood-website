@@ -4,7 +4,7 @@ const userRoute = require("../models/user");
 const postRoute = require("../models/post");
 const router = express.Router();
 
-router.get("/feed", ensureAuthenticated, async (req, res) => {
+router.get("/", ensureAuthenticated, async (req, res) => {
   try {
     // Fetch the user
     const user = await userRoute.findById(req.user.id);
